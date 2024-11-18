@@ -86,6 +86,8 @@ button:disabled {
 
 /* Loading Text */
 #loading {
-  font-weight: bold;
-  color: #ffcc00;
+  display: none;
+  font-size: 1.2em;
+  color: #555;
+  margin-top: 10px;
 }
