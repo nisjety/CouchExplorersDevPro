@@ -1,147 +1,86 @@
-<<<<<<< HEAD
-# sam-app
+Imagen Generator Pro
+Introduction:
+Imagen Generator Pro is an AWS Lambda-powered application that generates images based on user-provided prompts using Amazon Bedrock. The application serves a web interface allowing users to input a prompt and view the generated image in real time.
 
-This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. It includes the following files and folders.
+The project integrates several AWS services, including Lambda, S3, API Gateway, and CloudFormation. The workflow and deployment are automated using GitHub Actions, ensuring a streamlined development and deployment process.
 
-- hello_world - Code for the application's Lambda function.
-- events - Invocation events that you can use to invoke the function.
-- tests - Unit tests for the application code. 
-- template.yaml - A template that defines the application's AWS resources.
-
-The application uses several AWS resources, including Lambda functions and an API Gateway API. These resources are defined in the `template.yaml` file in this project. You can update the template to add AWS resources through the same deployment process that updates your application code.
-
-If you prefer to use an integrated development environment (IDE) to build and test your application, you can use the AWS Toolkit.  
-The AWS Toolkit is an open source plug-in for popular IDEs that uses the SAM CLI to build and deploy serverless applications on AWS. The AWS Toolkit also adds a simplified step-through debugging experience for Lambda function code. See the following links to get started.
-
-* [CLion](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-* [GoLand](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-* [IntelliJ](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-* [WebStorm](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-* [Rider](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-* [PhpStorm](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-* [PyCharm](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-* [RubyMine](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-* [DataGrip](https://docs.aws.amazon.com/toolkit-for-jetbrains/latest/userguide/welcome.html)
-* [VS Code](https://docs.aws.amazon.com/toolkit-for-vscode/latest/userguide/welcome.html)
-* [Visual Studio](https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/welcome.html)
-
-## Deploy the sample application
-
-The Serverless Application Model Command Line Interface (SAM CLI) is an extension of the AWS CLI that adds functionality for building and testing Lambda applications. It uses Docker to run your functions in an Amazon Linux environment that matches Lambda. It can also emulate your application's build environment and API.
-
-To use the SAM CLI, you need the following tools.
-
-* SAM CLI - [Install the SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
-* [Python 3 installed](https://www.python.org/downloads/)
-* Docker - [Install Docker community edition](https://hub.docker.com/search/?type=edition&offering=community)
-
-To build and deploy your application for the first time, run the following in your shell:
-
-```bash
-sam build --use-container
-sam deploy --guided
-```
-
-The first command will build the source of your application. The second command will package and deploy your application to AWS, with a series of prompts:
-
-* **Stack Name**: The name of the stack to deploy to CloudFormation. This should be unique to your account and region, and a good starting point would be something matching your project name.
-* **AWS Region**: The AWS region you want to deploy your app to.
-* **Confirm changes before deploy**: If set to yes, any change sets will be shown to you before execution for manual review. If set to no, the AWS SAM CLI will automatically deploy application changes.
-* **Allow SAM CLI IAM role creation**: Many AWS SAM templates, including this example, create AWS IAM roles required for the AWS Lambda function(s) included to access AWS services. By default, these are scoped down to minimum required permissions. To deploy an AWS CloudFormation stack which creates or modifies IAM roles, the `CAPABILITY_IAM` value for `capabilities` must be provided. If permission isn't provided through this prompt, to deploy this example you must explicitly pass `--capabilities CAPABILITY_IAM` to the `sam deploy` command.
-* **Save arguments to samconfig.toml**: If set to yes, your choices will be saved to a configuration file inside the project, so that in the future you can just re-run `sam deploy` without parameters to deploy changes to your application.
-
-You can find your API Gateway Endpoint URL in the output values displayed after deployment.
-
-## Use the SAM CLI to build and test locally
-
-Build your application with the `sam build --use-container` command.
-
-```bash
-sam-app$ sam build --use-container
-```
-
-The SAM CLI installs dependencies defined in `hello_world/requirements.txt`, creates a deployment package, and saves it in the `.aws-sam/build` folder.
-
-Test a single function by invoking it directly with a test event. An event is a JSON document that represents the input that the function receives from the event source. Test events are included in the `events` folder in this project.
-
-Run functions locally and invoke them with the `sam local invoke` command.
-
-```bash
-sam-app$ sam local invoke HelloWorldFunction --event events/event.json
-```
-
-The SAM CLI can also emulate your application's API. Use the `sam local start-api` to run the API locally on port 3000.
-
-```bash
-sam-app$ sam local start-api
-sam-app$ curl http://localhost:3000/
-```
-
-The SAM CLI reads the application template to determine the API's routes and the functions that they invoke. The `Events` property on each function's definition includes the route and method for each path.
-
-```yaml
-      Events:
-        HelloWorld:
-          Type: Api
-          Properties:
-            Path: /hello
-            Method: get
-```
-
-## Add a resource to your application
-The application template uses AWS Serverless Application Model (AWS SAM) to define application resources. AWS SAM is an extension of AWS CloudFormation with a simpler syntax for configuring common serverless application resources such as functions, triggers, and APIs. For resources not included in [the SAM specification](https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md), you can use standard [AWS CloudFormation](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html) resource types.
-
-## Fetch, tail, and filter Lambda function logs
-
-To simplify troubleshooting, SAM CLI has a command called `sam logs`. `sam logs` lets you fetch logs generated by your deployed Lambda function from the command line. In addition to printing the logs on the terminal, this command has several nifty features to help you quickly find the bug.
-
-`NOTE`: This command works for all AWS Lambda functions; not just the ones you deploy using SAM.
-
-```bash
-sam-app$ sam logs -n HelloWorldFunction --stack-name "sam-app" --tail
-```
-
-You can find more information and examples about filtering Lambda function logs in the [SAM CLI Documentation](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-logging.html).
-
-## Tests
-
-Tests are defined in the `tests` folder in this project. Use PIP to install the test dependencies and run tests.
-
-```bash
-sam-app$ pip install -r tests/requirements.txt --user
-# unit test
-sam-app$ python -m pytest tests/unit -v
-# integration test, requiring deploying the stack first.
-# Create the env variable AWS_SAM_STACK_NAME with the name of the stack we are testing
-sam-app$ AWS_SAM_STACK_NAME="sam-app" python -m pytest tests/integration -v
-```
-
-## Cleanup
-
-To delete the sample application that you created, use the AWS CLI. Assuming you used your project name for the stack name, you can run the following:
-
-```bash
-sam delete --stack-name "sam-app"
-```
-
-## Resources
-
-See the [AWS SAM developer guide](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html) for an introduction to SAM specification, the SAM CLI, and serverless application concepts.
-
-Next, you can use AWS Serverless Application Repository to deploy ready to use Apps that go beyond hello world samples and learn how authors developed their applications: [AWS Serverless Application Repository main page](https://aws.amazon.com/serverless/serverlessrepo/)
-=======
-         ___        ______     ____ _                 _  ___  
-        / \ \      / / ___|   / ___| | ___  _   _  __| |/ _ \ 
-       / _ \ \ /\ / /\___ \  | |   | |/ _ \| | | |/ _` | (_) |
-      / ___ \ V  V /  ___) | | |___| | (_) | |_| | (_| |\__, |
-     /_/   \_\_/\_/  |____/   \____|_|\___/ \__,_|\__,_|  /_/ 
- ----------------------------------------------------------------- 
+Features:
+Web Interface:          A user-friendly HTML page for entering prompts and viewing generated images.
+Image Generation:       Utilizes Amazon Bedrock's generative AI model to create images.
+AWS Integration:        Securely stores generated images in an S3 bucket.
+CI/CD:                  Automated deployment and testing using GitHub Actions.
 
 
-Hi there! Welcome to AWS Cloud9!
+Architecture
+AWS Lambda:      Backend logic for processing requests, generating images, and interacting with S3.
+Amazon S3:       Storage for the generated images.
+API Gateway:     Provides endpoints for serving the HTML page and handling image generation requests.
+GitHub Actions:  Automates the deployment process and ensures code quality.
 
-To get started, create some files, play with the terminal,
-or visit https://docs.aws.amazon.com/console/cloud9/ for our documentation.
+Prerequisites
+AWS account with access to Amazon Bedrock and S3.
+Installed and configured AWS SAM CLI.
+Node.js and Python 3.9 installed locally for development.
 
-Happy coding!
->>>>>>> 51d47d7 (Initial commit)
+
+GitHub repository: ImagenGeneratorPro.
+Local Setup
+Clone the Repository, in a terminal write:
+git clone https://github.com/nisjety/ImagenGeneratorPro.git
+cd ImagenGeneratorPro
+
+Install Dependencies, in a terminal write:
+sam build
+
+Run Locally, in a terminal write:
+sam local start-api --port 4000
+Access the Application: Open your browser and navigate to http://127.0.0.1:4000.
+
+Deployment
+Ensure your changes are pushed to the test first:
+
+In a terminal write:
+git add .
+eksemple: git commit -m "Update application"
+git push origin test
+
+GitHub Actions: The deployment process is automated via GitHub Actions. Every push to main triggers the deployment workflow.
+
+API Gateway URL: Once deployed, access the application using the API Gateway URL:
+
+Static Page: https://<API-ID>.execute-api.eu-west-1.amazonaws.com/Prod/
+Image Generation: https://<API-ID>.execute-api.eu-west-1.amazonaws.com/Prod/generate
+
+
+Files and Structure
+
+ImagenGeneratorPro/
+├── ImagenLambda/
+│   ├── app.py              # Lambda function logic
+│   ├── index.html          # Web page
+├── template.yaml           # AWS SAM template
+├── .github/
+│   ├── workflows/
+│       ├── deploy.yml      # GitHub Actions workflow
+
+
+Deliverables
+
+Requirement	            Description	                                                Location
+Lambda Function	      Generates images based on user input	                  app.py
+Static Web Page	      Frontend interface for the application	                  index.html
+AWS SAM Template	      Infrastructure as code	                                    template.yaml
+CI/CD Workflow	      Automated deployment process	                              deploy.yml
+S3 Bucket	            Stores generated images	                                    s3://pgr301-couch-explorers/8/
+API Gateway Endpoint	Serves the application and image generation endpoint	      API URL
+
+
+Testing
+Generate Image:
+      Navigate to the application.
+      Enter a prompt and click "Generate Image."
+      Verify the image is displayed.
+
+Error Handling:
+      Submit an invalid prompt or leave it blank.
+      Verify the error message.
