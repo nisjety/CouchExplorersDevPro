@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: AWS Lambda function for image generation using AWS SAM
+
+Globals:
+  Function:
+    Timeout: 30
+    Runtime: python3.9
+    Environment:
+      Variables:
+        BUCKET_NAME: pgr301-couch-explorers
+        CANDIDATE_NUMBER: 8
+    LoggingConfig:
+      LogFormat: JSON
+
+Resources:
+  ImageGeneratorProFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ImagenLambda/
+      Handler: app.lambda_handler
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action:
+                - s3:PutObject
+              Resource: arn:aws:s3:::pgr301-couch-explorers/*
+        - Statement:
+            - Effect: Allow
+              Action:
+                - bedrock:InvokeModel
+              Resource: '*'
+      Events:
+        ImageGeneratorProApi:
+          Type: Api
+          Properties:
+            Path: /generate
+            Method: post
+
+Outputs:
+  ImageGeneratorProApi:
+    Description: API Gateway endpoint URL for Prod stage for ImageGeneratorPro function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/generate/"
+  ImageGeneratorProFunctionArn:
+    Description: ARN of the ImageGeneratorPro Lambda function
+    Value: !GetAtt ImageGeneratorProFunction.Arn
