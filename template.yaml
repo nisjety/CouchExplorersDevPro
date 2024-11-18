@@ -1,11 +1,14 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: AWS Lambda function for image generation using AWS SAM
+Description: >
+  AWS Lambda function for image generation using AWS SAM.
+  Provides endpoints for generating images and serving a static HTML page.
 
 Globals:
   Function:
     Timeout: 30
     Runtime: python3.9
+    MemorySize: 256
     Environment:
       Variables:
         BUCKET_NAME: pgr301-couch-explorers
@@ -31,16 +34,24 @@ Resources:
                 - bedrock:InvokeModel
               Resource: '*'
       Events:
-        ImageGeneratorProApi:
+        GenerateImageApi:
           Type: Api
           Properties:
             Path: /generate
             Method: post
+        StaticPageApi:
+          Type: Api
+          Properties:
+            Path: /
+            Method: get
 
 Outputs:
-  ImageGeneratorProApi:
-    Description: API Gateway endpoint URL for Prod stage for ImageGeneratorPro function
+  ApiUrl:
+    Description: Base URL for API Gateway
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+  GenerateImageApiUrl:
+    Description: URL for the Generate Image endpoint
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/generate/"
-  ImageGeneratorProFunctionArn:
+  FunctionArn:
     Description: ARN of the ImageGeneratorPro Lambda function
     Value: !GetAtt ImageGeneratorProFunction.Arn

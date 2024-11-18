@@ -1,0 +1,91 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #4e54c8, #8f94fb);
+  color: #fff;
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+form {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+label {
+  font-size: 1.2rem;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+}
+
+button {
+  background: #ff6f61;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #ff4f3a;
+}
+
+/* Loading Indicator */
+#loading {
+  display: none;
+  font-size: 1rem;
+  margin-top: 20px;
+  color: #ff6f61;
+}
+
+/* Result Section */
+#result {
+  margin-top: 20px;
+  text-align: center;
+}
+
+img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-top: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+footer {
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+/* Disabled Button */
+button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Loading Text */
+#loading {
+  font-weight: bold;
+  color: #ffcc00;
+}
