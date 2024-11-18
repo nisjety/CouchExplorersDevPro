@@ -48,9 +48,8 @@ GitHub Actions: The deployment process is automated via GitHub Actions. Every pu
 
 API Gateway URL: Once deployed, access the application using the API Gateway URL:
 
-Static Page: https://<API-ID>.execute-api.eu-west-1.amazonaws.com/Prod/
-Image Generation: https://<API-ID>.execute-api.eu-west-1.amazonaws.com/Prod/generate
-
+Static Page: https://nsironwlv8.execute-api.eu-west-1.amazonaws.com/Prod
+Image Generation: https://nsironwlv8.execute-api.eu-west-1.amazonaws.com/Prod/generate
 
 Files and Structure
 
