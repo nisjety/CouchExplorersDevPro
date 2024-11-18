@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+sam-installation.zip
 
 # Created by https://www.gitignore.io/api/osx,linux,python,windows,pycharm,visualstudiocode
 
@@ -243,6 +243,3 @@ $RECYCLE.BIN/
 */build/*
 
 # End of https://www.gitignore.io/api/osx,linux,python,windows,pycharm,visualstudiocode
-=======
-sam-installation.zip
->>>>>>> 312bae2 (Update .gitignore to exclude large files)
