@@ -2,9 +2,9 @@
 FROM maven:3.8-openjdk-17 AS build
 WORKDIR /app
 
-# Copy only the pom.xml and src from java_sqs_client
-COPY java_sqs_client/pom.xml .
-COPY java_sqs_client/src ./src
+# Copy the pom.xml and src directory directly from the current directory
+COPY pom.xml .
+COPY src ./src
 
 # Download dependencies
 RUN mvn dependency:go-offline -B
