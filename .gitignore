@@ -125,6 +125,7 @@ venv.bak/
 .mypy_cache/
 
 # AWS
+sam-installation.zip
 .aws-sam/
 .aws/
 .awscli/
@@ -142,5 +143,6 @@ yarn-error.log
 
 # Installer Logs
 build/
+.zip
 
 # End of .gitignore
