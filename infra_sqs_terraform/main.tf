@@ -1,17 +1,32 @@
-# Ressurser
-
-# Outputs
-output "lambda_function_name" {
-  description = "Navnet på Lambda-funksjonen"
-  value       = "LambdaImage_generation_pro"
+# SNS Topic for Alarm Notifications
+resource "aws_sns_topic" "alarm_notifications" {
+  name = "sqs-cloudwatch-alarm-topic"
 }
 
-output "sqs_queue_url" {
-  description = "URL til SQS-køen"
-  value       = "https://sqs.eu-west-1.amazonaws.com/244530008913/image_generation_pro"
+# SNS Subscription for Email Notifications
+resource "aws_sns_topic_subscription" "email_subscription" {
+  topic_arn = aws_sns_topic.alarm_notifications.arn
+  protocol  = "email"
+  endpoint  = var.notification_email
 }
 
-output "sqs_queue_arn" {
-  description = "ARN til SQS-køen"
-  value       = "arn:aws:sqs:eu-west-1:244530008913:image_generation_pro"
+# CloudWatch Alarm for ApproximateAgeOfOldestMessage
+resource "aws_cloudwatch_metric_alarm" "sqs_approximate_age_alarm" {
+  alarm_name          = "SQSApproximateAgeTooHigh"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = 1
+  metric_name         = "ApproximateAgeOfOldestMessage"
+  namespace           = "AWS/SQS"
+  period              = 60
+  statistic           = "Maximum"
+  threshold           = 300 # Alarm when the oldest message exceeds 5 minutes
+
+  dimensions = {
+    QueueName = var.sqs_queue_name
+  }
+
+  alarm_description = "Triggered when the ApproximateAgeOfOldestMessage in the SQS queue exceeds 5 minutes."
+  actions_enabled   = true
+
+  alarm_actions = [aws_sns_topic.alarm_notifications.arn]
 }
