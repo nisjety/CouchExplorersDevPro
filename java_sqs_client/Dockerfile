@@ -2,14 +2,12 @@
 FROM maven:3.8-openjdk-17 AS build
 WORKDIR /app
 
-# Copy only the pom.xml first to leverage Docker layer caching
-COPY pom.xml .
+# Copy only the pom.xml and src from java_sqs_client
+COPY java_sqs_client/pom.xml .
+COPY java_sqs_client/src ./src
 
-# Resolve dependencies before copying the source code
+# Download dependencies
 RUN mvn dependency:go-offline -B
-
-# Copy the source code
-COPY src ./src
 
 # Build the application
 RUN mvn clean package -DskipTests
