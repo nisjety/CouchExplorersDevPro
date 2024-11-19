@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Imagen Generator Pro
 Introduction:
 Imagen Generator Pro is an AWS Lambda-powered application that generates images based on user-provided prompts using Amazon Bedrock. The application serves a web interface allowing users to input a prompt and view the generated image in real time.
@@ -84,7 +83,3 @@ Generate Image:
 Error Handling:
       Submit an invalid prompt or leave it blank.
       Verify the error message.
-=======
-# CouchExplorersDevPro
-AWS Lambda-funksjon som genererer bilder basert på brukergenererte prompts ved hjelp av AWS SAM (Serverless Application Model)
->>>>>>> efdd4b780088507c92b1b87a95ab97801dd3dc81

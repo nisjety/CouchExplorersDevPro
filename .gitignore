@@ -72,6 +72,8 @@ atlassian-ide-plugin.xml
 
 # Python
 __pycache__/
+*.pyc
+*.pyo
 *.py[cod]
 *$py.class
 *.so
