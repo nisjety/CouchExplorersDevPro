@@ -12,11 +12,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Sjekk ut koden
+      # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Konfigurer AWS-legitimasjon
+      # Configure AWS credentials
       - name: Setup AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -24,22 +24,29 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-1
 
-      # Sett opp Terraform
+      # Install Terraform
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.9.0
 
-      # Initialiser Terraform
+      # Navigate to the Terraform configuration directory
+      - name: Change Directory to Terraform Config
+        run: cd infra_sqs_terraform
+
+      # Initialize Terraform
       - name: Terraform Init
+        working-directory: infra_sqs_terraform
         run: terraform init
 
-      # Plan for ikke-main branches
+      # Plan for non-main branches
       - name: Terraform Plan
         if: github.ref != 'refs/heads/main'
+        working-directory: infra_sqs_terraform
         run: terraform plan
 
       # Apply for main branch
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
+        working-directory: infra_sqs_terraform
         run: terraform apply -auto-approve
