@@ -1,13 +1,13 @@
-name: Deploy Terraform Infrastructure
+name: Terraform Test Workflow
 
 on:
   push:
-    branches:
+    branches-ignore:
       - main
 
 jobs:
   terraform:
-    name: Deploy Terraform Infrastructure
+    name: Terraform Plan Workflow
     runs-on: ubuntu-latest
 
     steps:
@@ -38,7 +38,7 @@ jobs:
         working-directory: infra_sqs_terraform
         run: terraform init
 
-      # Apply for main branch
-      - name: Terraform Apply
+      # Plan for non-main branches
+      - name: Terraform Plan
         working-directory: infra_sqs_terraform
-        run: terraform apply -auto-approve
+        run: terraform plan
