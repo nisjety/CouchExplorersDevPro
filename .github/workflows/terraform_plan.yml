@@ -1,4 +1,4 @@
-name: Terraform Test Workflow
+name: Terraform Plan Workflow
 
 on:
   push:
